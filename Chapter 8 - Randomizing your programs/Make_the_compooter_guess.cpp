@@ -26,7 +26,7 @@ int guess(int low, int high)
     return compooters_guess; 
 }
 
-int compare(int generated, int guess, int &count)
+int compare(int generated, int guess)
 {
     int result; 
     if (guess < generated){
@@ -40,7 +40,7 @@ int compare(int generated, int guess, int &count)
     {
         result = 0;
     }
-    count++;
+
     return result;
 }
 
@@ -58,7 +58,8 @@ int main()
     while(!is_correct)
     {
         int compooter_guess = guess(bottom, top);
-        int result = compare(number, compooter_guess, number_of_guesses);
+        number_of_guesses ++;
+        int result = compare(number, compooter_guess);
         switch(result){
             case low:
                 std::cout << "The guess was too low!" << std::endl;

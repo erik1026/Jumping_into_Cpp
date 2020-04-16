@@ -18,7 +18,6 @@ enum user_input{
 
 int random()
 {
-    srand(time(NULL));
     return rand() % 3 + 1;
 }
 
