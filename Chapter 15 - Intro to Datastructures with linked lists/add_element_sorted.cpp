@@ -15,6 +15,7 @@ void add_element(int element)
 {
     Element* node = global_list;
     Element* previous = NULL;
+    
     //  Add first element to list
     if (node == NULL)
     {
@@ -26,57 +27,55 @@ void add_element(int element)
 
         std::cout << "New node value: " << new_element->value << "\nNew node next: " << new_element->next << "\n" << std::endl;
     }
-    else if (node != NULL)
+    
+    else
     {
-        while(node->next != NULL)
+        //  Add second element to list
+        if (node->next == NULL)
         {
-            if((element <= node->value) || (element == node->value))
-            {
-                std::cout << "Value entered is less than the first element!\n" << std::endl;
-                Element* new_element = new Element;
-                new_element->value = element;
-                new_element->next = node;
-                std::cout << "New element value: " << new_element->value << "\nNext node value: " << new_element->next->value << std::endl;
-                previous->next = new_element;
-                break;
-            }
-            else if((element >= previous->value) && (element <= node->value) || (element == node->value))
+            //  Add the element before the last node
+            if (node->value >= element)
             {
                 Element* new_element = new Element;
                 new_element->value = element;
                 new_element->next = node;
-                std::cout << "New element value: " << new_element->value << "\nNext node value: " << new_element->next->value << "\n" << std::endl;
-                previous->next = new_element;
-                break;
+                node->next = NULL;
+                global_list = new_element;
             }
-            else
+            //  Add the element after the last node
+            else if(node->value < element)
             {
-                previous = node;
-                node = node->next;
+                Element* new_element = new Element;
+                new_element->value = element;
+                new_element->next = NULL;
+                node->next = new_element;
+                global_list = node;
             }
         }
-        
-        //  Add the second element to the list if the value is less than the first nodes value
-        if (node->value >= element)
+        else
         {
-            Element* new_element = new Element;
-            new_element->value = element;
-            new_element->next = node;
-            node->next = NULL;
-            global_list = new_element;
-        }
-        //  Add the second element to the list if the value is greater than the first nodes value
-        else if(node->value < element)
-        {
-            Element* new_element = new Element;
-            new_element->value = element;
-            new_element->next = NULL;
-            node->next = new_element;
-            global_list = node;
-        }
-        
+            while(node->next != NULL)
+            {
+
+                if((element >= previous->value) && (element <= node->value) || (element == node->value))
+                {
+                    Element* new_element = new Element;
+                    new_element->value = element;
+                    new_element->next = node;
+                    std::cout << "New element value: " << new_element->value << "\nNext node value: " << new_element->next->value << "\n" << std::endl;
+                    previous->next = new_element;
+                    global_list = previous;
+                    break;
+                }
+                else
+                {
+                    previous = node;
+                    node = node->next;
+                }
+            }
+        }   
     }
-}
+}   
 
 void display_list(Element* list)
 {
